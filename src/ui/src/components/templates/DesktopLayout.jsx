@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function DesktopLayout({ header, leftSidebar, rightSidebar, mainViewport }) {
+export function DesktopLayout({ header, mainViewport }) {
   return (
     <div style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: 'var(--bg-color)' }}>
       {/* Header Slot (Top Menu Bar) */}
@@ -19,29 +19,18 @@ export function DesktopLayout({ header, leftSidebar, rightSidebar, mainViewport 
         </header>
       )}
 
-      {/* Main Grid Layout */}
+      {/* Main Viewport Container */}
       <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '280px 1fr 300px', 
-        gap: '1.25rem', 
+        display: 'flex',
+        flexDirection: 'column',
         flex: 1, 
         minHeight: 0,
         padding: '1.25rem' 
       }}>
-        {/* Left Control Column */}
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', overflowY: 'auto' }}>
-          {leftSidebar}
-        </aside>
-
         {/* CAD viewport Slot */}
-        <main style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <main style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
           {mainViewport}
         </main>
-
-        {/* Right Properties Panel */}
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', overflowY: 'auto' }}>
-          {rightSidebar}
-        </aside>
       </div>
     </div>
   );

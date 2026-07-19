@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DesktopLayout from '../templates/DesktopLayout';
-import ParameterSlider from '../molecules/ParameterSlider';
-import AdvancedToolbar from '../organisms/AdvancedToolbar';
-import FittingManager from '../organisms/FittingManager';
-import StatusPanel from '../organisms/StatusPanel';
+
 import AuthModal from '../organisms/AuthModal';
 import SaveModal from '../organisms/SaveModal';
 
@@ -275,35 +272,6 @@ export function DesktopPage() {
               <span>🌐</span>
               <strong style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Мова: Українська</strong>
             </div>
-          </>
-        }
-        leftSidebar={
-          <>
-            <AdvancedToolbar onToolSelect={(tool) => console.log('Selected tool:', tool)} />
-            <FittingManager />
-          </>
-        }
-        rightSidebar={
-          <>
-            <div className="glass-panel" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>Розміри</h3>
-              <ParameterSlider label="Ширина корпусу" value={width} min={600} max={3000} unit="мм" onChange={handleWidthChange} />
-              <ParameterSlider label="Висота корпусу" value={height} min={400} max={2500} unit="мм" onChange={handleHeightChange} />
-              <ParameterSlider label="Глибина корпусу" value={depth} min={400} max={1200} unit="мм" onChange={handleDepthChange} />
-            </div>
-            <StatusPanel 
-              syncStatus={syncStatus} 
-              activeOrder={activeOrder} 
-              user={user}
-              isOffline={isOffline}
-              undoSize={undoStack.length}
-              redoSize={redoStack.length}
-              onUndo={handleUndo}
-              onRedo={handleRedo}
-              onSaveClick={() => setIsSaveModalOpen(true)} 
-              onLoginClick={() => setIsAuthModalOpen(true)}
-              onLogout={handleLogout}
-            />
           </>
         }
         mainViewport={
