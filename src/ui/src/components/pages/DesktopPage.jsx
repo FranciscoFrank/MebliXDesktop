@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DesktopLayout from '../templates/DesktopLayout';
 
+import CadViewport from '../organisms/CadViewport';
 import AuthModal from '../organisms/AuthModal';
 import SaveModal from '../organisms/SaveModal';
 
@@ -275,16 +276,7 @@ export function DesktopPage() {
           </>
         }
         mainViewport={
-          <div className="glass-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 65%)' }}></div>
-            <div style={{ zIndex: 1, textAlign: 'center' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚙</div>
-              <h4 style={{ fontWeight: 600 }}>Активна C++ геометрія моделі</h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
-                Габарити: {width} x {height} x {depth} мм
-              </p>
-            </div>
-          </div>
+          <CadViewport />
         }
       />
 
