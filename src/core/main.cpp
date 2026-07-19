@@ -1,5 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <limits.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <thread>
+#include <chrono>
 #include "geometry/Panel.hpp"
 #include "ipc/IpcServer.hpp"
 #include "storage/ProjectManager.hpp"
@@ -42,8 +49,99 @@ std::vector<std::string> parseJsonArray(const std::string& jsonArrayStr) {
     return result;
 }
 
-int main() {
+// Helper to get executable directory path
+std::string getExecutableDir() {
+    char result[PATH_MAX];
+    ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+    if (count == -1) {
+        return "";
+    }
+    std::string path(result, count);
+    size_t last_slash = path.find_last_of("/");
+    if (last_slash == std::string::npos) {
+        return "";
+    }
+    return path.substr(0, last_slash);
+}
+
+// RAII helper to manage the React/Vite development server process
+class DevServerManager {
+private:
+    pid_t m_pid;
+public:
+    DevServerManager(pid_t pid) : m_pid(pid) {}
+    ~DevServerManager() {
+        if (m_pid > 0) {
+            std::cout << "[Core Launcher] Stopping React Vite dev server (PID: " << m_pid << ")..." << std::endl;
+            kill(m_pid, SIGTERM);
+            int status;
+            waitpid(m_pid, &status, 0);
+            std::cout << "[Core Launcher] React Vite dev server stopped." << std::endl;
+        }
+    }
+};
+
+int main(int argc, char* argv[]) {
+    bool disableSync = false;
+    bool disableDevServer = false;
+
+    // Parse command line arguments
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--offline" || arg == "--no-sync") {
+            disableSync = true;
+        } else if (arg == "--no-ui" || arg == "--no-dev-server") {
+            disableDevServer = true;
+        }
+    }
+
     std::cout << "MebliX Desktop Core CAD Engine starting..." << std::endl;
+
+    // Launch React/Vite development server if not disabled
+    pid_t devServerPid = 0;
+    if (!disableDevServer) {
+        std::string uiDir = getExecutableDir() + "/../src/ui";
+        std::cout << "[Core Launcher] Starting React Vite dev server in " << uiDir << "..." << std::endl;
+
+        devServerPid = fork();
+        if (devServerPid == 0) {
+            // In child process: Redirect output to vite_dev.log to prevent console pollution
+            FILE* log = fopen("vite_dev.log", "w");
+            if (log) {
+                int fd = fileno(log);
+                dup2(fd, 1); // Redirect stdout
+                dup2(fd, 2); // Redirect stderr
+                fclose(log);
+            }
+
+            if (chdir(uiDir.c_str()) != 0) {
+                std::cerr << "[Core Launcher Child] Failed to change directory to " << uiDir << std::endl;
+                exit(1);
+            }
+
+            execlp("npm", "npm", "run", "dev", nullptr);
+            std::cerr << "[Core Launcher Child] Failed to start npm run dev" << std::endl;
+            exit(1);
+        } else if (devServerPid < 0) {
+            std::cerr << "[Core Launcher] Failed to fork process for React dev server." << std::endl;
+        } else {
+            std::cout << "[Core Launcher] React Vite dev server launched with PID: " << devServerPid << std::endl;
+            std::cout << "[Core Launcher] Waiting for server to initialize..." << std::endl;
+            // Wait for Vite server to bind to port 3001
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+            // Check if it exited early (e.g. npm install was not run)
+            int status;
+            pid_t result = waitpid(devServerPid, &status, WNOHANG);
+            if (result == devServerPid) {
+                std::cerr << "[Core Launcher] WARNING: React dev server process exited unexpectedly with code " << WEXITSTATUS(status) << std::endl;
+                std::cerr << "[Core Launcher] Check 'vite_dev.log' for details. You may need to run 'npm install' in 'MebliXDesktop/src/ui' first." << std::endl;
+            }
+        }
+    }
+
+    // Instantiating the RAII manager to ensure the child process is terminated on exit
+    DevServerManager devServer(devServerPid);
 
     // Initialize IPC Server
     MebliX::IpcServer ipc;
@@ -53,7 +151,7 @@ int main() {
     static MebliX::ProjectManager storage;
     
     // Initialize Cloud Sync Client
-    static MebliX::SyncClient syncClient("ws://localhost:8080");
+    static MebliX::SyncClient syncClient("ws://localhost:8080", disableSync);
     // Connect to Sync server in the background (mock)
     syncClient.connect();
 

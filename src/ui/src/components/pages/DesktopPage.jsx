@@ -22,7 +22,8 @@ export function DesktopPage() {
     return saved ? JSON.parse(saved) : null;
   });
   const [isOffline, setIsOffline] = useState(() => {
-    return localStorage.getItem('meblix_is_offline') === 'true';
+    const saved = localStorage.getItem('meblix_is_offline');
+    return saved === null ? true : saved === 'true';
   });
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
