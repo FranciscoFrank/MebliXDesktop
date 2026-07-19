@@ -20,28 +20,28 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
       const response = await fetch('http://localhost:8080/health').catch(() => null);
       
       if (!response || !response.ok) {
-        throw new Error('Sync server is unreachable. Please verify Sync backend is running or continue offline.');
+        throw new Error('Сервер синхронізації недоступний. Перевірте, чи запущений сервер Sync, або продовжіть роботу локально.');
       }
 
       const data = await response.json();
       console.log('Sync backend healthcheck response:', data);
 
       if (activeTab === 'register' && password !== confirmPassword) {
-        throw new Error('Passwords do not match.');
+        throw new Error('Паролі не збігаються.');
       }
 
       // Successful simulated auth
       setTimeout(() => {
         setIsLoading(false);
         onLoginSuccess({
-          username: username || 'User',
+          username: username || 'Користувач',
           token: 'mock-jwt-token-12345'
         });
       }, 1000);
 
     } catch (err) {
       setIsLoading(false);
-      setErrorMessage(err.message || 'Authentication failed.');
+      setErrorMessage(err.message || 'Помилка авторизації.');
     }
   };
 
@@ -109,29 +109,29 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
           <h2 style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, #60a5fa, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '0.25rem' }}>
             MebliX Desktop
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Welcome to the furniture geometry workshop</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Ласкаво просимо до меблевої геометричної майстерні</p>
         </div>
 
         <div style={tabContainerStyle}>
-          <div style={tabStyle(activeTab === 'login')} onClick={() => { setActiveTab('login'); setErrorMessage(''); }}>Sign In</div>
-          <div style={tabStyle(activeTab === 'register')} onClick={() => { setActiveTab('register'); setErrorMessage(''); }}>Register</div>
+          <div style={tabStyle(activeTab === 'login')} onClick={() => { setActiveTab('login'); setErrorMessage(''); }}>Вхід</div>
+          <div style={tabStyle(activeTab === 'register')} onClick={() => { setActiveTab('register'); setErrorMessage(''); }}>Реєстрація</div>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div style={inputGroupStyle}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Username / Email</label>
+            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Ім'я користувача / Email</label>
             <input 
               type="text" 
               required 
               style={inputStyle} 
               value={username} 
               onChange={e => setUsername(e.target.value)} 
-              placeholder="e.g. designer123"
+              placeholder="наприклад, designer123"
             />
           </div>
 
           <div style={inputGroupStyle}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Password</label>
+            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Пароль</label>
             <input 
               type="password" 
               required 
@@ -144,7 +144,7 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
 
           {activeTab === 'register' && (
             <div style={inputGroupStyle}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Confirm Password</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Підтвердження паролю</label>
               <input 
                 type="password" 
                 required 
@@ -163,14 +163,14 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
           )}
 
           <Button variant="primary" type="submit" style={{ width: '100%', marginTop: '0.5rem' }}>
-            {isLoading ? 'Connecting...' : activeTab === 'login' ? 'Sign In & Sync' : 'Register & Sync'}
+            {isLoading ? 'З\'єднання...' : activeTab === 'login' ? 'Увійти та синхронізувати' : 'Зареєструватися та синхронізувати'}
           </Button>
         </form>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Or continue without synchronization</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Або продовжити без синхронізації</span>
           <Button variant="outline" onClick={onWorkOffline} style={{ width: '100%' }}>
-            Work Offline (Local Mode)
+            Працювати автономно (локальний режим)
           </Button>
         </div>
       </div>

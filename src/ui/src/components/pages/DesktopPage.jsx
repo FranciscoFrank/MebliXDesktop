@@ -8,9 +8,9 @@ import AuthModal from '../organisms/AuthModal';
 import SaveModal from '../organisms/SaveModal';
 
 export function DesktopPage() {
-  const [width, setWidth] = useState(140);
-  const [height, setHeight] = useState(75);
-  const [depth, setDepth] = useState(60);
+  const [width, setWidth] = useState(1400);
+  const [height, setHeight] = useState(750);
+  const [depth, setDepth] = useState(600);
 
   // Undo/Redo state tracking
   const [undoStack, setUndoStack] = useState([]);
@@ -46,9 +46,9 @@ export function DesktopPage() {
           }
           if (data.undoStack) setUndoStack(data.undoStack);
           if (data.redoStack) setRedoStack(data.redoStack);
-          console.log('[IPC C++ Core] Restored parameters and history from config.mbx');
+          console.log('[IPC C++ Core] Відновлено параметри та історію з config.mbx');
         } catch (err) {
-          console.log('[IPC C++ Core] No valid config.mbx history restored:', err.message);
+          console.log('[IPC C++ Core] Не знайдено збереженої історії config.mbx:', err.message);
         }
       });
     }
@@ -177,13 +177,13 @@ export function DesktopPage() {
     if (window.saveLocalProject) {
       window.saveLocalProject('config.mbx', dimensionsStr, undoStr, redoStr).then((res) => {
         if (res === 'true') {
-          alert('Project + Undo/Redo history successfully saved locally to config.mbx!');
+          alert('Проект та історію дій успішно збережено локально у config.mbx!');
         } else {
-          alert('C++ Core Error saving project.');
+          alert('Помилка C++ ядра при збереженні проекту.');
         }
       });
     } else {
-      alert('Saved locally as config.mbx (Simulated outside native container).');
+      alert('Збережено локально як config.mbx (симуляція поза нативним контейнером).');
     }
   };
 
@@ -202,17 +202,17 @@ export function DesktopPage() {
         try {
           const response = JSON.parse(responseStr);
           if (response.status === 'success') {
-            alert(`Cloud Sync Successful!\n- GLB model URL: ${response.cloudUrl}\n- Preview image URL: ${response.thumbnailUrl}`);
+            alert(`Синхронізація з хмарою успішна!\n- URL GLB-моделі: ${response.cloudUrl}\n- URL ескізу: ${response.thumbnailUrl}`);
             setIsSaveModalOpen(false);
           } else {
-            alert(`Sync Failed: ${response.message}`);
+            alert(`Синхронізація завершилася помилкою: ${response.message}`);
           }
         } catch (e) {
-          alert(`Failed parsing response: ${e.message}`);
+          alert(`Помилка парсингу відповіді: ${e.message}`);
         }
       });
     } else {
-      alert('Sync parameters with cloud (Simulated outside native container).');
+      alert('Синхронізація параметрів із хмарою (симуляція поза нативним контейнером).');
       setIsSaveModalOpen(false);
     }
   };
@@ -286,10 +286,10 @@ export function DesktopPage() {
         rightSidebar={
           <>
             <div className="glass-panel" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>Dimensions</h3>
-              <ParameterSlider label="Cabinet Width" value={width} min={60} max={300} onChange={handleWidthChange} />
-              <ParameterSlider label="Cabinet Height" value={height} min={40} max={250} onChange={handleHeightChange} />
-              <ParameterSlider label="Cabinet Depth" value={depth} min={40} max={120} onChange={handleDepthChange} />
+              <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>Розміри</h3>
+              <ParameterSlider label="Ширина корпусу" value={width} min={600} max={3000} unit="мм" onChange={handleWidthChange} />
+              <ParameterSlider label="Висота корпусу" value={height} min={400} max={2500} unit="мм" onChange={handleHeightChange} />
+              <ParameterSlider label="Глибина корпусу" value={depth} min={400} max={1200} unit="мм" onChange={handleDepthChange} />
             </div>
             <StatusPanel 
               syncStatus={syncStatus} 
@@ -311,9 +311,9 @@ export function DesktopPage() {
             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 65%)' }}></div>
             <div style={{ zIndex: 1, textAlign: 'center' }}>
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚙</div>
-              <h4 style={{ fontWeight: 600 }}>Active C++ Geometry Model</h4>
+              <h4 style={{ fontWeight: 600 }}>Активна C++ геометрія моделі</h4>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
-                Scale: {width} x {height} x {depth} mm
+                Габарити: {width} x {height} x {depth} мм
               </p>
             </div>
           </div>

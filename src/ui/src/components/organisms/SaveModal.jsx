@@ -54,7 +54,7 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
     <div style={modalOverlayStyle}>
       <div className="glass-panel" style={modalContentStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Save Project</h3>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Зберегти проект</h3>
           <button 
             onClick={onClose} 
             style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '1.2rem', cursor: 'pointer' }}
@@ -64,7 +64,7 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
         </div>
 
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-          Select the storage destination for your parametric model:
+          Оберіть місце збереження для вашої параметричної моделі:
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -79,11 +79,11 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>💾 Save Locally (.mbx)</span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', border: '1px solid var(--text-muted)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>Offline First</span>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>💾 Зберегти локально (.mbx)</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', border: '1px solid var(--text-muted)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>Локальний файл</span>
             </div>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-              Saves the binary model parameters and complete design history (Undo/Redo action steps) to your computer. Excellent for offline work.
+              Зберігає геометричні параметри моделі та повну історію редагування (кроки Назад/Вперед) на вашому комп'ютері. Ідеально для автономної роботи.
             </p>
           </div>
 
@@ -97,22 +97,22 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>☁️ Sync with MebliX Cloud</span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--primary-color)', border: '1px solid var(--primary-color)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>Web Optimized</span>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>☁️ Синхронізувати з хмарою MebliX</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--primary-color)', border: '1px solid var(--primary-color)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>Веб-оптимізація</span>
             </div>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-              Compiles model geometry to highly optimized GLB/GLTF mesh and generates thumbnail preview directly in C++ Core, then uploads via Casablanca REST SDK. Necessary for synchronization with MebliX Web Configurator.
+              Компілює геометрію моделі у високооптимізований 3D-меш GLB/GLTF та генерує ескіз у C++ ядрі, після чого завантажує через Casablanca REST SDK. Необхідно для синхронізації з веб-конфігуратором MebliX.
             </p>
             {!isLoggedIn && (
               <div style={{ fontSize: '0.7rem', color: '#f59e0b', marginTop: '0.25rem', fontWeight: 600 }}>
-                ⚠️ Requires account authentication. You will be prompted to log in.
+                ⚠️ Потрібна авторизація облікового запису. Вам буде запропоновано увійти.
               </div>
             )}
           </div>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button variant="outline" onClick={onClose}>Скасувати</Button>
         </div>
       </div>
     </div>

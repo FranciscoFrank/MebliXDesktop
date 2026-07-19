@@ -3,9 +3,12 @@ import React from 'react';
 export function StatusIndicator({ status }) {
   const getStatusColor = () => {
     switch (status) {
-      case 'Connected': return 'var(--accent-color)';
-      case 'Warning': return '#f59e0b';
-      case 'Error': return '#ef4444';
+      case 'Connected':
+      case 'Підключено': return 'var(--accent-color)';
+      case 'Warning':
+      case 'Попередження': return '#f59e0b';
+      case 'Error':
+      case 'Помилка': return '#ef4444';
       default: return 'var(--text-muted)';
     }
   };
