@@ -10,7 +10,7 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
     left: 0,
     width: '100vw',
     height: '100vh',
-    background: 'rgba(5, 7, 12, 0.7)',
+    background: 'rgba(0, 0, 0, 0.4)',
     backdropFilter: 'blur(8px)',
     display: 'flex',
     justifyContent: 'center',
@@ -24,14 +24,14 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    border: '1px solid var(--panel-border)',
   };
 
   const optionCardStyle = {
     padding: '1.25rem',
     borderRadius: '8px',
     border: '1px solid var(--panel-border)',
-    background: 'rgba(255, 255, 255, 0.03)',
+    background: 'var(--bg-color)',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     display: 'flex',
@@ -41,12 +41,12 @@ export function SaveModal({ isOpen, onClose, onSaveLocal, onSaveCloud, isLoggedI
   };
 
   const optionCardHoverStyle = (e) => {
-    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.07)';
+    e.currentTarget.style.background = 'rgba(37, 99, 235, 0.05)';
     e.currentTarget.style.borderColor = 'var(--primary-color)';
   };
 
   const optionCardLeaveStyle = (e) => {
-    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+    e.currentTarget.style.background = 'var(--bg-color)';
     e.currentTarget.style.borderColor = 'var(--panel-border)';
   };
 

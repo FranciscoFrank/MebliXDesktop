@@ -51,8 +51,8 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
     left: 0,
     width: '100vw',
     height: '100vh',
-    background: 'rgba(5, 7, 12, 0.8)',
-    backdropFilter: 'blur(10px)',
+    background: 'rgba(0, 0, 0, 0.4)',
+    backdropFilter: 'blur(8px)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -65,7 +65,7 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    border: '1px solid var(--panel-border)',
   };
 
   const tabContainerStyle = {
@@ -96,7 +96,7 @@ export function AuthModal({ onLoginSuccess, onWorkOffline }) {
     padding: '0.75rem',
     borderRadius: '6px',
     border: '1px solid var(--panel-border)',
-    background: 'rgba(255, 255, 255, 0.04)',
+    background: '#ffffff',
     color: 'var(--text-primary)',
     outline: 'none',
     fontSize: '0.9rem',

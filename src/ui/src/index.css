@@ -3,16 +3,16 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  --bg-color: #0b0f19;
-  --panel-bg: rgba(22, 28, 45, 0.65);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --primary-color: #3b82f6;
-  --primary-glow: rgba(59, 130, 246, 0.25);
-  --accent-color: #10b981;
-  --text-primary: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  color-scheme: light;
+  --bg-color: #f3f4f6; /* Light gray background */
+  --panel-bg: #ffffff; /* Pure white panel backgrounds */
+  --panel-border: #e5e7eb; /* Soft border */
+  --primary-color: #2563eb; /* High-contrast blue */
+  --primary-glow: rgba(37, 99, 235, 0.12);
+  --accent-color: #059669; /* Soft green */
+  --text-primary: #111827; /* Dark gray for primary text */
+  --text-secondary: #4b5563; /* Medium gray for secondary text */
+  --text-muted: #9ca3af; /* Light gray for muted text */
 
   background-color: var(--bg-color);
   color: var(--text-primary);
@@ -35,14 +35,12 @@ body {
   display: flex;
 }
 
-/* Glassmorphism Panel Utility */
+/* CAD Panel Utility */
 .glass-panel {
   background: var(--panel-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.05); /* Soft light shadow */
 }
 
 /* Base button animations */

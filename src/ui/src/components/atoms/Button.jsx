@@ -16,12 +16,18 @@ export function Button({ children, onClick, variant = 'primary', style = {} }) {
     return '1px solid var(--panel-border)';
   };
 
+  const getTextColor = () => {
+    if (variant === 'outline') return 'var(--primary-color)';
+    if (variant === 'default') return 'var(--text-primary)';
+    return 'white';
+  };
+
   const buttonStyle = {
     padding: '0.6rem 1.2rem',
     borderRadius: '6px',
     backgroundColor: getBackgroundColor(),
     border: getBorder(),
-    color: 'white',
+    color: getTextColor(),
     fontWeight: 600,
     fontSize: '0.85rem',
     display: 'inline-flex',

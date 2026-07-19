@@ -222,13 +222,59 @@ export function DesktopPage() {
       <DesktopLayout
         header={
           <>
-            <div>
-              <h1 style={{ fontSize: '1.6rem', fontWeight: 800, background: 'linear-gradient(135deg, #60a5fa, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                MebliX Desktop
-              </h1>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Advanced Parametric Solid Modeler</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginRight: '0.5rem' }}>
+                <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary-color)' }}>M</span>
+                <span style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '0.05em' }}>MebliX</span>
+              </div>
+              
+              <nav style={{ display: 'flex', gap: '0.25rem' }}>
+                {['Файл', 'Інструменти', 'Налаштування', 'Вікно', 'Довідка'].map((item) => (
+                  <button
+                    key={item}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      padding: '0.4rem 0.75rem',
+                      borderRadius: '4px',
+                      fontSize: '0.85rem',
+                      fontWeight: 500,
+                      color: 'var(--text-secondary)',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+                      e.target.style.color = 'var(--text-primary)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = 'transparent';
+                      e.target.style.color = 'var(--text-secondary)';
+                    }}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </nav>
             </div>
-            <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Project ID: PRJ-9821-X</div>
+            
+            <div 
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.4rem', 
+                fontSize: '0.85rem', 
+                color: 'var(--text-secondary)',
+                padding: '0.4rem 0.75rem',
+                borderRadius: '4px',
+                backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                border: '1px solid var(--panel-border)',
+                cursor: 'pointer'
+              }}
+            >
+              <span>🌐</span>
+              <strong style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Мова: Українська</strong>
+            </div>
           </>
         }
         leftSidebar={
