@@ -13,6 +13,12 @@
 #include "network/SyncClient.hpp"
 #include "webview.h"
 
+#if defined(WEBVIEW_GTK)
+#include <gtk/gtk.h>
+#elif defined(_WIN32)
+#include <windows.h>
+#endif
+
 // Helper to parse JSON string array e.g. ["arg1", "arg2", ...]
 std::vector<std::string> parseJsonArray(const std::string& jsonArrayStr) {
     std::vector<std::string> result;
@@ -163,6 +169,24 @@ int main(int argc, char* argv[]) {
         webview::webview w(true, nullptr);
         w.set_title("MebliX Desktop App");
         w.set_size(1280, 800, WEBVIEW_HINT_NONE);
+
+#if defined(WEBVIEW_GTK)
+        auto res = w.window();
+        if (res.ok()) {
+            GtkWindow* window = GTK_WINDOW(res.value());
+            if (window) {
+                gtk_window_maximize(window);
+            }
+        }
+#elif defined(_WIN32)
+        auto res = w.window();
+        if (res.ok()) {
+            HWND hwnd = (HWND)res.value();
+            if (hwnd) {
+                ShowWindow(hwnd, SW_MAXIMIZE);
+            }
+        }
+#endif
 
         // Bind C++ Local Save
         w.bind("saveLocalProject", [](std::string req) -> std::string {
